@@ -1,0 +1,103 @@
+﻿@model ECommerceWebsite.Models.User
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_LoginandRegister";
+}
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        height: 100vh; /* Make sure the body takes full height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .container-xxl {
+        padding: 0;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh; /* Centering in the middle of the viewport */
+    }
+
+    .authentication-inner {
+        max-width: 400px; /* Set the desired width */
+        width: 100%;
+    }
+
+    .card {
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1); /* Optional: Add some shadow to the card */
+        border-radius: 8px; /* Optional: Add rounded corners to the card */
+    }
+</style>
+<br />
+<div class="container-xxl">
+    <div class="authentication-wrapper authentication-basic container-p-y" style="width: 50%; margin-left:12%;">
+        <div class="authentication-inner">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Logo -->
+                    <div class="app-brand justify-content-center " style="text-align:center;">
+                        <a href="index.html" class="app-brand-link gap-2">
+                            <i class="fa-solid fa-cat" style="color: #696cff; font-size:30px;"></i>
+                            <span class="app-brand-text demo text-body fw-bolder">Kitty Shop</span>
+                        </a>
+                    </div>
+                    <br />
+                    <!-- /Logo -->
+                    <h4 class="mb-2">Welcome! 👋</h4>
+                    <form id="formAuthentication" asp-action="Login" method="post">
+                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Email or Username</label>
+                            <input asp-for="Email" type="text"
+                                   class="form-control"
+                                   id="email"
+                                   name="email"
+                                   placeholder="Enter your email or username"
+                                   autofocus />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3 form-password-toggle">
+                            <div class="d-flex justify-content-between">
+                                <label class="form-label" for="password">Password</label>
+                                <a href="auth-forgot-password-basic.html">
+                                    <small>Forgot Password?</small>
+                                </a>
+                            </div>
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                <input asp-for="PasswordHash" name="password" type="password"
+                                       id="password"
+                                       class="form-control"
+                                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                       aria-describedby="password" />
+                                <span asp-validation-for="PasswordHash" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="remember-me" />
+                                <label class="form-check-label" for="remember-me"> Remember Me </label>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary d-grid w-100">Sign in</button>
+                    </form>
+
+                    <p class="text-center mt-3">
+                        <span>New on our platform?</span>
+                        <a asp-controller="Account" asp-action="Register">
+                            <span>Create an account</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

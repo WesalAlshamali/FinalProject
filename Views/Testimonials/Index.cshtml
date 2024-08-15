@@ -1,0 +1,94 @@
+﻿@model IEnumerable<ECommerceWebsite.Models.Testimonial>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_AdminLayout";
+
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Message"]
+    </div>
+}
+<p style="margin-top:60px">
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <strong style="color:black;">
+                @Html.DisplayNameFor(model => model.User.UserName)
+                </strong>
+            </th>
+            <th>
+                <strong style="color:black;">
+                @Html.DisplayNameFor(model => model.User.Email)
+                </strong>
+            </th>
+            <th>
+
+                <strong style="color:black;">
+                    @Html.DisplayNameFor(model => model.Content)
+                    </strong>
+            </th>
+            <th>
+                <strong style="color:black;">
+                @Html.DisplayNameFor(model => model.Status)
+                </strong>
+            </th>
+            <th>
+                <strong style="color:black;">
+                @Html.DisplayNameFor(model => model.DateCreated)
+                </strong>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                    <strong style="color:black;">
+                        @Html.DisplayFor(modelItem => item.User.UserName)
+                    </strong>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                <td>
+                        @if (item.Status == ECommerceWebsite.Constants.TestimonialStatus.Approved)
+                        {
+                        <span class="badge bg-success">Approved</span>
+                        }
+                        else
+                        {
+                        <span class="badge bg-secondary">Rejected</span>
+                        }
+                </td>
+                
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreated)
+            </td>
+            <td>
+                    <div  style="display:flex; justify-content:space-around; ">
+                        <form asp-action="Accept" asp-route-id="@item.TestimonialID" style="margin-right: 20px;" method="post">
+                            <button type="submit" class="btn btn-outline-success" style="">Accept</button>
+                        </form>
+
+                        <form asp-action="RejectTestimonial" asp-route-id="@item.TestimonialID" method="post">
+                            <button type="submit" class="btn btn-outline-danger" style="display:inline">Reject</button>
+                        </form>
+                    </div>
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

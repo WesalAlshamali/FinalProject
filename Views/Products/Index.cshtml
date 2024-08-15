@@ -1,0 +1,403 @@
+﻿@model ProductIndexViewModel
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<!-- Include SweetAlert2 Library -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+    .portfolio #portfolio-flters li {
+        cursor: pointer;
+        display: inline-block;
+        padding: 8px 16px 10px 16px;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 1;
+        text-transform: uppercase;
+        color: #444444;
+        margin-bottom: 5px;
+        transition: all 0.3s ease-in-out;
+        border-radius: 50px;
+    }
+
+        .portfolio #portfolio-flters li:hover,
+        .portfolio #portfolio-flters li.filter-active {
+            color: #fff;
+            background: #696cff !important;
+        }
+
+    .showMoreButton {
+        border: none;
+    }
+
+        .showMoreButton:hover {
+            background: #787af0 !important;
+        }
+</style>
+
+<section id="portfolio" class="portfolio">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>Products</h2>
+            <p>Our products are made with love Discover more products you will love</p>
+        </div>
+
+        <div class="row" data-aos="fade-up" data-aos-delay="100">
+            <div class="col-lg-12 d-flex justify-content-center">
+                <ul id="portfolio-flters">
+                    <li data-filter="*" class="filter-active" onclick="filterByCategory('all')">All</li>
+                    @foreach (var category in Model.Categories)
+                    {
+                        if (category.CategoryStatus == ECommerceWebsite.Constants.CategoryStatus.Active)
+                        {
+                            <li data-filter=".filter-@category.CategoryName" onclick="filterByCategory('@category.CategoryName')">@category.CategoryName</li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200" id="productList">
+            @foreach (var item in Model.Products)
+            {
+                @if ((item.ProductStatus == ECommerceWebsite.Constants.ProductStatus.Active || item.ProductStatus == ECommerceWebsite.Constants.ProductStatus.OutOfStock) && item.Category.CategoryStatus == ECommerceWebsite.Constants.CategoryStatus.Active)
+                {
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-@item.Category.CategoryName" data-category="@item.Category.CategoryName">
+                        <div class="portfolio-wrap">
+                            <img src="@Url.Content("~/images/productsImages/" + item.ProductImage)" class="img-fluid main-product-image" alt="@item.ProductName">
+                            <div class="portfolio-info">
+                                <h4>@item.ProductName</h4>
+                                <p>@item.ProductDescription</p>
+                                <p>Price: @item.Price</p>
+                                <p>Discount: @item.Discount</p>
+                                <p>Status: @item.ProductStatus</p>
+                                <div class="portfolio-links">
+                                    <form asp-controller="Cart" asp-action="AddToCart" method="post" class="add-to-cart-form" style="display:inline;">
+                                        <input type="hidden" name="id" value="@item.ProductID" />
+                                        <button style="background: none;color:white;font-size: 26px; outline:none; border:none;" type="submit" class="portfolio"><i class="bx bx-plus"></i></button>
+                                    </form>
+                                    <a asp-action="Details" asp-route-id="@item.ProductID"><i class="bx bx-link"></i></a>
+                                </div>
+                              
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+      @*   <div class="text-center mt-4">
+            <button style="background: #696cff; outline:none;" id="showMoreBtn" class="btn btn-primary showMoreButton">Show More</button>
+        </div> *@
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Initialize Isotope and show more functionality (your existing script)
+        // ...
+
+        // SweetAlert on form submission
+        document.querySelectorAll('.add-to-cart-form').forEach(form => {
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                Swal.fire({
+                    title: 'Added to cart!',
+                    text: 'Add More Product To Make Your Cat Happy  🐾',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit(); // Submit the form after confirmation
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let productList = document.getElementById('productList');
+        let showMoreBtn = document.getElementById('showMoreBtn');
+        let items = Array.from(productList.querySelectorAll('.portfolio-item'));
+        let itemsToShow = 3;
+        let displayedItems = 0;
+        let iso;
+        let currentFilter = '*';
+
+        function initializeIsotope() {
+            const portfolioContainer = document.querySelector('.portfolio-container');
+            if (portfolioContainer) {
+                iso = new Isotope(portfolioContainer, {
+                    itemSelector: '.portfolio-item',
+                    layoutMode: 'fitRows'
+                });
+                iso.arrange({ filter: currentFilter });
+            }
+        }
+
+        function updateDisplay() {
+            iso.arrange({ filter: currentFilter });
+            items.forEach((item, index) => {
+                item.style.display = index < displayedItems ? 'block' : 'none';
+            });
+            if (iso) {
+                iso.arrange();
+            }
+            if (displayedItems >= items.length) {
+                showMoreBtn.style.display = 'none';
+            }
+        }
+
+        showMoreBtn.addEventListener('click', function () {
+            displayedItems += itemsToShow;
+            updateDisplay();
+        });
+
+        displayedItems = itemsToShow;
+        initializeIsotope();
+        updateDisplay();
+
+        // Handle AddToCart form submission with SweetAlert
+        document.querySelectorAll('.add-to-cart-form').forEach(form => {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                let formData = new FormData(this);
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                }).then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Added to Cart',
+                                text: `${data.productName} has been added to your cart!`,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'There was an error adding the product to the cart.',
+                            });
+                        }
+                    });
+            });
+        });
+    });
+
+    function filterByCategory(category) {
+        currentFilter = category === 'all' ? '*' : `.filter-${category}`;
+        if (iso) {
+            iso.arrange({ filter: currentFilter });
+        }
+        document.querySelectorAll('#portfolio-flters li').forEach(button => {
+            button.classList.remove('filter-active');
+        });
+        document.querySelector(`[onclick="filterByCategory('${category}')"]`).classList.add('filter-active');
+        document.dispatchEvent(new Event('DOMContentLoaded'));
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @model ProductIndexViewModel
+
+@{
+    ViewData["Title"] = "Products";
+
+}
+
+
+<style>
+    .portfolio #portfolio-flters li {
+        cursor: pointer;
+        display: inline-block;
+        padding: 8px 16px 10px 16px;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 1;
+        text-transform: uppercase;
+        color: #444444;
+        margin-bottom: 5px;
+        transition: all 0.3s ease-in-out;
+        border-radius: 50px;
+    }
+
+        .portfolio #portfolio-flters li:hover,
+        .portfolio #portfolio-flters li.filter-active {
+            color: #fff;
+            background: #696cff !important;
+        }
+
+    .showMoreButton{
+        border:none;
+    }
+    .showMoreButton:hover{
+            background: #787af0 !important;
+    }
+        </style>
+
+<section id="portfolio" class="portfolio">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>Products</h2>
+            <p>Our products are made with love Discover more products you will love</p>
+        </div>
+
+        <div class="row" data-aos="fade-up" data-aos-delay="100">
+            <div class="col-lg-12 d-flex justify-content-center">
+                <ul id="portfolio-flters" >
+                    <li data-filter="*" class="filter-active" onclick="filterByCategory('all')">All</li>
+                    @foreach (var category in Model.Categories)
+                    {
+                        if(category.CategoryStatus == ECommerceWebsite.Constants.CategoryStatus.Active)
+                        {
+                            <li data-filter=".filter-@category.CategoryName" onclick="filterByCategory('@category.CategoryName')">@category.CategoryName</li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200" id="productList">
+            @foreach (var item in Model.Products)
+            {
+                @if ((item.ProductStatus == ECommerceWebsite.Constants.ProductStatus.Active || item.ProductStatus == ECommerceWebsite.Constants.ProductStatus.OutOfStock) && item.Category.CategoryStatus == ECommerceWebsite.Constants.CategoryStatus.Active)
+                {
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-@item.Category.CategoryName" data-category="@item.Category.CategoryName">
+                        <div class="portfolio-wrap">
+                            <img src="@Url.Content("~/images/productsImages/" + item.ProductImage)" class="img-fluid main-product-image" alt="@item.ProductName">
+                            <div class="portfolio-info">
+                                <h4>@item.ProductName</h4>
+                                <p>@item.ProductDescription</p>
+                                <p>Price: @item.Price</p>
+                                <p>Discount: @item.Discount</p>
+                                <p>Status: @item.ProductStatus</p>
+                                <div class="portfolio-links">
+                                    <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
+                                        <input type="hidden" name="id" value="@item.ProductID" />
+                                        <button style="background: none; outline:none; border:none;" type="submit" class="portfolio"> <a class="portfolio"><i class="bx bx-plus"></i></a></button>
+                                    </form>
+                                    <a asp-action="Details" asp-route-id="@item.ProductID"><i class="bx bx-link"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+        <div class="text-center mt-4">
+            <button style="background: #696cff ; outline:none;" id="showMoreBtn" class="btn btn-primary showMoreButton">Show More</button>
+        </div>
+    </div>
+</section>
+
+
+<!-- JavaScript Initialization -->
+<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let productList = document.getElementById('productList');
+        let showMoreBtn = document.getElementById('showMoreBtn');
+        let items = Array.from(productList.querySelectorAll('.portfolio-item'));
+        let itemsToShow = 3; // Number of items to show initially and when "Show More" is clicked
+        let displayedItems = 0;
+        let iso;
+        let currentFilter = '*';
+
+        function initializeIsotope() {
+            const portfolioContainer = document.querySelector('.portfolio-container');
+            if (portfolioContainer) {
+                iso = new Isotope(portfolioContainer, {
+                    itemSelector: '.portfolio-item',
+                    layoutMode: 'fitRows'
+                });
+                // Apply current filter
+                iso.arrange({ filter: currentFilter });
+            }
+        }
+
+        function updateDisplay() {
+            // Apply current filter
+            iso.arrange({ filter: currentFilter });
+
+            // Display only the number of items we want to show
+            items.forEach((item, index) => {
+                if (index < displayedItems) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Reinitialize Isotope after updating display
+            if (iso) {
+                iso.arrange();
+            }
+
+            // If all items are shown, hide the button
+            if (displayedItems >= items.length) {
+                showMoreBtn.style.display = 'none';
+            }
+        }
+
+        showMoreBtn.addEventListener('click', function () {
+            displayedItems += itemsToShow;
+            updateDisplay();
+        });
+
+        // Initial display setup
+        displayedItems = itemsToShow;
+        initializeIsotope();
+        updateDisplay();
+    });
+
+    // Filter products by category
+    function filterByCategory(category) {
+        currentFilter = category === 'all' ? '*' : `.filter-${category}`;
+
+        // Apply the filter immediately
+        if (iso) {
+            iso.arrange({ filter: currentFilter });
+        }
+
+        document.querySelectorAll('#portfolio-flters li').forEach(button => {
+            button.classList.remove('filter-active');
+        });
+
+        document.querySelector(`[onclick="filterByCategory('${category}')"]`).classList.add('filter-active');
+
+        // Reset displayed items count and update display
+        document.dispatchEvent(new Event('DOMContentLoaded')); // Triggers display update with current filter
+    }
+</script>
+ *@
