@@ -1,235 +1,42 @@
-﻿@* @{
-    Layout = "_AdminLayout";
-}
-
-
-
-    <div class="layout-wrapper layout-content-navbar">
-        <div class="layout-container">
-
-            <div class="layout-page">
-                <div class="content-wrapper">
-
-                    <div class="container-xxl flex-grow-1 container-p-y">
-                    <div class="row" style="justify-content: center">
-                            <div class="col-lg-8 mb-4 order-0">
-                                <div class="card">
-                                    <div class="d-flex align-items-end row">
-                                        <div class="col-sm-7">
-                                            <div class="card-body">
-                                                <h5 class="card-title text-primary">Do Your Best John! 🎉</h5>
-                                                <p class="mb-4">
-                                                    You have done <span class="fw-bold">72%</span> more sales today. Check your new badge in
-                                                    your profile.
-                                                </p>
-
-                                                <a href="javascript:;" class="btn btn-sm btn-outline-primary">View Badges</a>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-5 text-center text-sm-left">
-                                            <div class="card-body pb-0 px-0 px-md-4">
-                                            <img src="~/assets/img/illustrations/man-with-laptop-light.png"
-                                                     height="140"
-                                                     alt="View Badge User"
-                                                     data-app-dark-img="illustrations/man-with-laptop-dark.png"
-                                                     data-app-light-img="illustrations/man-with-laptop-light.png" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                       
-                            <!-- Total Revenue -->
-                            <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
-                                <div class="card">
-                                    <div class="row row-bordered g-0">
-                                        <div class="col-md-8">
-                                            <h5 class="card-header m-0 me-2 pb-3">Total Revenue</h5>
-                                            <div id="totalRevenueChart" class="px-2"></div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="card-body">
-                                                <div class="text-center">
-                                                    <div class="dropdown">
-                                                        <button class="btn btn-sm btn-outline-primary dropdown-toggle"
-                                                                type="button"
-                                                                id="growthReportId"
-                                                                data-bs-toggle="dropdown"
-                                                                aria-haspopup="true"
-                                                                aria-expanded="false">
-                                                            2022
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="growthReportId">
-                                                            <a class="dropdown-item" href="javascript:void(0);">2021</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);">2020</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);">2019</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="growthChart"></div>
-                                            <div class="text-center fw-semibold pt-3 mb-2">62% Company Growth</div>
-
-                                            <div class="d-flex px-xxl-4 px-lg-2 p-4 gap-xxl-3 gap-lg-1 gap-3 justify-content-between">
-                                                <div class="d-flex">
-                                                    <div class="me-2">
-                                                        <span class="badge bg-label-primary p-2"><i class="bx bx-dollar text-primary"></i></span>
-                                                    </div>
-                                                    <div class="d-flex flex-column">
-                                                        <small>2022</small>
-                                                        <h6 class="mb-0">$32.5k</h6>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex">
-                                                    <div class="me-2">
-                                                        <span class="badge bg-label-info p-2"><i class="bx bx-wallet text-info"></i></span>
-                                                    </div>
-                                                    <div class="d-flex flex-column">
-                                                        <small>2021</small>
-                                                        <h6 class="mb-0">$41.2k</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-       
-                      </div>
-                    
-                  
-
-                </div>
-              
-            </div>
-          
-        </div>
-
-   
-    </div>
-  
-
-
- *@
+﻿
 @{
     Layout = "_AdminLayout";
 }
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <div class="layout-wrapper layout-content-navbar">
+
     <div class="layout-container">
         <div class="layout-page">
             <div class="content-wrapper">
                 <div class="container-xxl flex-grow-1 container-p-y">
 
-                    <!-- Welcome Card 
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8 mb-4">
-                            <div class="card bg-gradient-primary text-white shadow-lg rounded-lg">
-                                <div class="card-body d-flex align-items-center justify-content-between">
-                                    <div>
-                                        <h4 class="card-title text-white">Welcome Back, John! 🎉</h4>
-                                        <p class="mb-2">
-                                            Your sales have increased by <span class="fw-bold">72%</span> today! Check out your new badge.
-                                        </p>
-                                        <a href="javascript:;" class="btn btn-light btn-sm">View Badges</a>
-                                    </div>
-                                    <img src="~/assets/img/illustrations/man-with-laptop-light.png" height="140" alt="User Badge" class="img-fluid rounded-circle" />
-                                </div>
-                            </div>
-                        </div>
-					</div>-->
+               
+                    <h1 class="title" style="text-align:center;">To-do List</h1>
+                        <div class="todo-list" >
+                        <div class="list-head">
+                            <input type="text" class="entered-list" placeholder="ADD YOUR LIST" id="to-do">
+                            <button class="add-list">ADD</button>
 
-                    <!-- Total Revenue Section -->
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8 mb-4">
-                            <div class="card border-0 shadow-lg rounded-lg">
-                                <div class="card-header bg-light">
-                                    <h4 class="card-title text-dark mb-0">Total Revenue Overview</h4>
-                                    <p class="text-muted mt-1">
-                                        Monitor your financial performance over the year. Analyze trends, discover growth opportunities, and make data-driven decisions.
-                                    </p>
-                                </div>
-                                <div class="card-body">
-                                    <div id="totalRevenueChart"></div>
-                                    <div class="text-center mt-4">
-                                        <p class="text-muted mb-1">Revenue growth of <span class="text-success fw-bold">15%</span> compared to last quarter. Keep up the great work!</p>
-                                        <a href="javascript:;" class="btn btn-primary btn-sm">View Detailed Report</a>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
+                        <div class="tasks">
+                            <!-- <div class="item  id="item">
+                               <p class="too" ></p>
+
+                                 <div class="item-btn">
+                                     <i class="fa-solid fa-pen-to-square " onclick="update()" ></i>
+                                     <i class="fa-solid fa-xmark"></i>
+                                     <i class="fa-sharp fa-solid fa-check" style="color: #000000;"></i>
+
+                                 </div>
+                            </div> -->
+
+
+                        </div>
+                        <button class="remove">Clear All</button>
+
                     </div>
-
-                    <!-- Growth Report Section -->
-                    <div class="row justify-content-center">
-                        <!-- First Card -->
-                        <div class="col-lg-4 mb-4">
-                            <div class="card shadow-lg rounded-lg">
-                                <div class="card-body text-center">
-                                    <button class="btn btn-sm btn-outline-primary dropdown-toggle mb-3" type="button" id="growthReportId1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        2022
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="growthReportId1">
-                                        <a class="dropdown-item" href="javascript:void(0);">2021</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">2020</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">2019</a>
-                                    </div>
-                                    <div id="growthChart1"></div>
-                                    <div class="text-muted mt-3">62% Company Growth</div>
-                                </div>
-                                <div class="d-flex justify-content-around p-3">
-                                    <div class="text-center">
-                                        <span class="badge bg-primary p-2"><i class="bx bx-dollar text-white"></i></span>
-                                        <div>
-                                            <small class="text-muted">2022</small>
-                                            <h6 class="mb-0">$32.5k</h6>
-                                        </div>
-                                    </div>
-                                    <div class="text-center">
-                                        <span class="badge bg-info p-2"><i class="bx bx-wallet text-white"></i></span>
-                                        <div>
-                                            <small class="text-muted">2021</small>
-                                            <h6 class="mb-0">$41.2k</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Second Card -->
-                        <div class="col-lg-4 mb-4">
-                            <div class="card shadow-lg rounded-lg">
-                                <div class="card-body text-center">
-                                    <button class="btn btn-sm btn-outline-primary dropdown-toggle mb-3" type="button" id="growthReportId2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        2022
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="growthReportId2">
-                                        <a class="dropdown-item" href="javascript:void(0);">2021</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">2020</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">2019</a>
-                                    </div>
-                                    <div id="growthChart2"></div>
-                                    <div class="text-muted mt-3">62% Company Growth</div>
-                                </div>
-                                <div class="d-flex justify-content-around p-3">
-                                    <div class="text-center">
-                                        <span class="badge bg-primary p-2"><i class="bx bx-dollar text-white"></i></span>
-                                        <div>
-                                            <small class="text-muted">2022</small>
-                                            <h6 class="mb-0">$32.5k</h6>
-                                        </div>
-                                    </div>
-                                    <div class="text-center">
-                                        <span class="badge bg-info p-2"><i class="bx bx-wallet text-white"></i></span>
-                                        <div>
-                                            <small class="text-muted">2021</small>
-                                            <h6 class="mb-0">$41.2k</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            
+                   
 
                 </div>
             
@@ -239,5 +46,236 @@
 
       
     </div>
-   
+    <script src="https://kit.fontawesome.com/5769cd0a63.js" crossorigin="anonymous"></script>
 </div>
+
+ <script>
+    let input = document.querySelector('.entered-list');
+    let addbut = document.querySelector('.add-list');
+    let tasks = document.querySelector('.tasks');
+    let item = document.querySelector('.item');
+    let btnDelete = document.querySelector('.remove');
+    const par = document.getElementById("to-do");
+    let arr = [];
+    mood = "Add";
+
+    input.addEventListener('keyup', () => {
+        if (input.value != '') {
+            addbut.classList.add('active')
+        } else {
+            addbut.classList.remove('active')
+        }
+    })
+    show();
+
+    function show() {
+        tasks.innerHTML = '';
+        let getlocalStorage = localStorage.getItem("neww");
+        if (getlocalStorage == null) {
+            arr = [];
+        }
+        else {
+            arr = JSON.parse(getlocalStorage);
+            for (i = 0; i < arr.length; i++) {
+                console.log(arr[i].task)
+
+                let newItem = document.createElement('div');
+                newItem.classList.add('item');
+                newItem.innerHTML = `
+          <p>${arr[i].task}</p>
+
+            <div class="item-btn">
+                <i class="fa-solid fa-xmark" onclick="deleteTask(${i})"></i>
+                 <i class="fa-sharp fa-solid fa-check" style="color: #000000;"></i>
+                 <i class="fa-solid fa-pen-to-square" onclick="update(${i})"></i>
+
+            </div>
+
+
+          `;
+                tasks.appendChild(newItem);
+            }
+        }
+
+
+
+
+    }
+
+    addbut.addEventListener('click', () => {
+
+        if (mood == 'Add') {
+            let userdata = {
+                task: input.value,
+                completed: 0
+            }
+
+
+            arr.push(userdata);
+
+        }
+        else if (mood == 'Edit') {
+            arr[tmp].task = input.value;
+            addbut.innerHTML = 'Add';
+            mood == 'Add'
+
+        }
+
+        localStorage.setItem("neww", JSON.stringify(arr));
+        input.value = '';
+        show();
+
+    })
+
+
+    btnDelete.addEventListener('click', (e) => {
+        localStorage.clear()
+        show();
+
+    });
+
+    function deleteTask(i) {
+        arr.splice(i, 1);
+        localStorage.setItem("neww", JSON.stringify(arr));
+        show();
+    }
+
+    tasks.addEventListener('click', (e) => {
+        if (e.target.classList.contains('fa-check')) {
+            e.target.parentElement.parentElement.classList.toggle('completed');
+            //arr[i]=1;
+            //arr.push(localStorage);
+
+        }
+
+    });
+
+    function update(i) {
+
+        input.value = arr[i].task;
+        addbut.innerHTML = 'Edit';
+        mood = 'Edit';
+        tmp = i;
+        scroll({
+            top: 0,
+            behavior: 'smooth'
+        })
+    }
+
+  </script>
+
+  <style>
+    .title {
+        font-size: 30px;
+        font-weight: 600;
+        color: rgb(0, 0, 0);
+        letter-spacing: 1px;
+        margin: 30px 0;
+    }
+
+    .todo-list {
+        width: 450px;
+        padding: 20px;
+        margin:0 auto;
+        box-shadow: 0 10px 40px rgb(0,0,0,0.1 );
+        border-radius: 5px;
+        background-color: #7695FF;
+    }
+
+    .list-head {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .entered-list {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        width: 343px;
+    }
+
+    .add-list {
+        border: none;
+        border-radius: 5px;
+        
+        cursor: pointer;
+        width: 69px;
+        background-color: #9DBDFF;
+      /*   opacity: 0.6; */
+        
+    }
+
+     .add-list.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+     .add-list:hover {
+            background-color: #bbcae9;
+        }
+
+    .tasks {
+        width: 436px;
+        margin-top: 30px;
+    }
+
+    .item {
+        padding-left: 9px;
+        margin-right: 16px;
+        border-radius: 5px;
+        box-shadow: 0 10px 30px rgb(0,0,0,0.1);
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .item p {
+            font-size: 16px;
+            font-weight: 500px;
+            color: black;
+            letter-spacing: 1px;
+        }
+
+        .item.completed p {
+            text-decoration: line-through;
+            color: black;
+        }
+
+    .item-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding-right: 4px;
+    }
+
+        .item-btn i {
+            cursor: pointer;
+            font-size: 18px;
+            color: black;
+        }
+
+    .remove {
+        color:black;
+        border: none;
+        border-radius: 5px;
+        background-color: #9DBDFF;
+        cursor: pointer;
+       /*  width: 69px; */
+        opacity: 0.6;
+        height: 35px;
+    }
+
+        .remove.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .remove:hover {
+            background-color: #bbcae9;
+        }
+
+        </style>
+
