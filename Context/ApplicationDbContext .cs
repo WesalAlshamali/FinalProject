@@ -6,6 +6,7 @@ namespace ECommerceWebsite.Context
 
     public class ApplicationDbContext : DbContext
     {
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> option) : base(option) { }
         public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -15,6 +16,8 @@ namespace ECommerceWebsite.Context
         public DbSet<Testimonial> Testimonials { get; set; }
         public DbSet<ProductPhoto> ProductPhotos { get; set; }
         public DbSet<Code> Code { get; set; }
+
+        public DbSet<ContactUs> ContactUsMessages { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

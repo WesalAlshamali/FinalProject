@@ -1,6 +1,7 @@
 using ECommerceWebsite.Context;
 using ECommerceWebsite.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
@@ -39,11 +40,41 @@ namespace ECommerceWebsite.Controllers
                 return View(testemonials);
             }
         }
-
-        public IActionResult GetInTouch()
+        public IActionResult ContactUs()
         {
+            var count = HttpContext.Session.GetInt32("countOfItem");
+            ViewBag.Count = HttpContext.Session.GetInt32("countOfItem");
+
+            if (HttpContext.Session.GetInt32("userId") != null)
+            {
+                ViewBag.Login = "Login";
+            }
             return View();
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ContactUs([Bind("Id,Name,Email,Subject,Message,UserId")] ContactUs contactUs)
+        {
+            contactUs.Subject = "";
+            var count = HttpContext.Session.GetInt32("countOfItem");
+            ViewBag.Count = HttpContext.Session.GetInt32("countOfItem");
+
+            if (HttpContext.Session.GetInt32("userId") != null)
+            {
+                ViewBag.Login = "Login";
+            }
+            contactUs.UserId = HttpContext.Session.GetInt32("userId");
+            _context.Add(contactUs);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", contactUs.UserId);
+            return View(contactUs);
+        }
+
+
         public IActionResult Services()
         {
             return View();
