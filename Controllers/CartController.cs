@@ -88,16 +88,15 @@ namespace ECommerceWebsite.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
         [HttpPost]
         [RoleValidation(Constants.Roles.User)]
         public async Task<IActionResult> Checkout(
-      string fullName,
-      string address,
-      string city,
-      string state,
-      string postalCode,
-      string country)
+             string fullName,
+             string address,
+             string city,
+             string state,
+             string postalCode,
+             string country)
         {
             try
             {
@@ -168,6 +167,7 @@ namespace ECommerceWebsite.Controllers
                 return View("Index", "Home");
             }
         }
+
 
 
         [HttpPost]
